@@ -40,13 +40,14 @@ class Bot{
                 headers,
                 json
               };
-            request.post(this._webhookUrl, options, function(_error, _response, body){
-                console.log(`send msg, response: ${JSON.stringify(body)}`);
-            });
+            return new Promise((resolve, reject) => {
+              request.post(this._webhookUrl, options, function(_error, _response, body){
+                  resolve({ _error, _response, body });
+              });
+            })
         }
         catch(err) {
-            console.error(err);
-            return false;
+            return Promise.reject(err);
         }        
     }
 }
